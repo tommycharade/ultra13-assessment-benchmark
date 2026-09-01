@@ -1,0 +1,347 @@
+{
+  "schemaVersion": "ultra13-assessment-state/v1",
+  "cohortName": "Open-source agent security benchmark",
+  "maximumAgents": 100,
+  "generatedAt": "2026-09-01T18:00:31.168Z",
+  "selectedAgentId": "crewaiinc-crewai-examples",
+  "agents": [
+    {
+      "id": "openai-openai-agents-python",
+      "index": 1,
+      "name": "openai-agents-python",
+      "repository": "openai/openai-agents-python",
+      "repositoryUrl": "https://github.com/openai/openai-agents-python",
+      "framework": "openai-agents",
+      "version": "0.19.4",
+      "stage": "qa",
+      "compatibility": "supported",
+      "score": {
+        "version": "ultra13-benchmark-score/v1",
+        "total": 20,
+        "preciseTotal": 19.8,
+        "components": [
+          {
+            "id": "assurance",
+            "label": "Evidence assurance",
+            "points": 16.9,
+            "maximum": 20,
+            "unknownCount": 0,
+            "detail": "Scope 5/5 · compatibility 5/5 · traceability 1.9/5 · completeness 5/5",
+            "sourcePaths": [
+              "$.selectedDeploymentUnit|activeDeploymentUnit.configurationDigest",
+              "$.threatModel|graph|manifest.compatibility",
+              "$.threatModel.maestroAssessments[*].evidence",
+              "$.threatModel.asiAssessments[*].evidence"
+            ]
+          },
+          {
+            "id": "maestro",
+            "label": "MAESTRO outcomes",
+            "points": 2.1,
+            "maximum": 40,
+            "unknownCount": 45,
+            "detail": "0 controlled/not triggered · 25 suspected · 0 triggered · 45 unknown · 0 not applicable",
+            "sourcePaths": [
+              "$.threatModel.maestroAssessments"
+            ]
+          },
+          {
+            "id": "asi",
+            "label": "OWASP ASI outcomes",
+            "points": 0.8,
+            "maximum": 25,
+            "unknownCount": 21,
+            "detail": "1 controlled/not triggered · 0 suspected · 8 triggered · 21 unknown · 0 not applicable",
+            "sourcePaths": [
+              "$.threatModel.asiAssessments"
+            ]
+          },
+          {
+            "id": "findings",
+            "label": "Open findings",
+            "points": 0,
+            "maximum": 15,
+            "unknownCount": 1,
+            "detail": "No findings collection is present in the bundle; zero points are awarded rather than assuming a clear result.",
+            "sourcePaths": [
+              "$.findings"
+            ]
+          }
+        ],
+        "unknownCount": 67,
+        "evaluatedAt": "2026-09-01T18:00:31.103Z",
+        "method": "static-evidence-only"
+      },
+      "evidence": {
+        "sourceFile": "openai__openai-agents-python.json",
+        "rawUrl": "./sample-data/openai__openai-agents-python.json",
+        "sha256": "d0cfdea3885e10ae9d67d13ed73b9435cfebbcc2ef18d884a3179128bc032f6e",
+        "schemaVersion": "ultra13/v1alpha1",
+        "capturedAt": "2026-08-12T01:00:44.524127Z",
+        "product": "Ultra13",
+        "buildIdentity": "",
+        "configurationDigest": "sha256:f802801cc5c20a234ce6048f84f92e790917356ecefa439f1509e959833b2b6e",
+        "commit": "e3d7c1727bf43761afbb7954651b7f908a973a3b",
+        "maestroRulePack": "2026.09.1",
+        "asiRulePack": "2026.08.1",
+        "maestro": {
+          "controlled": 0,
+          "suspected": 25,
+          "triggered": 0,
+          "unknown": 45,
+          "notApplicable": 0,
+          "total": 70
+        },
+        "asi": {
+          "controlled": 1,
+          "suspected": 0,
+          "triggered": 8,
+          "unknown": 21,
+          "notApplicable": 0,
+          "total": 30
+        },
+        "findingCount": null,
+        "openFindingCount": null
+      },
+      "blocker": "",
+      "notes": "The bundle has no findings collection; the findings component receives 0/15.",
+      "createdAt": "2026-08-12T01:02:00.000Z",
+      "updatedAt": "2026-09-01T18:00:31.103Z"
+    },
+    {
+      "id": "google-adk-python",
+      "index": 2,
+      "name": "adk-python",
+      "repository": "google/adk-python",
+      "repositoryUrl": "https://github.com/google/adk-python",
+      "framework": "google-adk",
+      "version": "2.6.3",
+      "stage": "qa",
+      "compatibility": "supported",
+      "score": {
+        "version": "ultra13-benchmark-score/v1",
+        "total": 25,
+        "preciseTotal": 24.6,
+        "components": [
+          {
+            "id": "assurance",
+            "label": "Evidence assurance",
+            "points": 16.3,
+            "maximum": 20,
+            "unknownCount": 0,
+            "detail": "Scope 5/5 · compatibility 5/5 · traceability 1.3/5 · completeness 5/5",
+            "sourcePaths": [
+              "$.selectedDeploymentUnit|activeDeploymentUnit.configurationDigest",
+              "$.threatModel|graph|manifest.compatibility",
+              "$.threatModel.maestroAssessments[*].evidence",
+              "$.threatModel.asiAssessments[*].evidence"
+            ]
+          },
+          {
+            "id": "maestro",
+            "label": "MAESTRO outcomes",
+            "points": 1.6,
+            "maximum": 40,
+            "unknownCount": 51,
+            "detail": "0 controlled/not triggered · 19 suspected · 0 triggered · 51 unknown · 0 not applicable",
+            "sourcePaths": [
+              "$.threatModel.maestroAssessments"
+            ]
+          },
+          {
+            "id": "asi",
+            "label": "OWASP ASI outcomes",
+            "points": 6.7,
+            "maximum": 25,
+            "unknownCount": 21,
+            "detail": "8 controlled/not triggered · 0 suspected · 1 triggered · 21 unknown · 0 not applicable",
+            "sourcePaths": [
+              "$.threatModel.asiAssessments"
+            ]
+          },
+          {
+            "id": "findings",
+            "label": "Open findings",
+            "points": 0,
+            "maximum": 15,
+            "unknownCount": 1,
+            "detail": "No findings collection is present in the bundle; zero points are awarded rather than assuming a clear result.",
+            "sourcePaths": [
+              "$.findings"
+            ]
+          }
+        ],
+        "unknownCount": 73,
+        "evaluatedAt": "2026-09-01T18:00:31.165Z",
+        "method": "static-evidence-only"
+      },
+      "evidence": {
+        "sourceFile": "google__adk-python.json",
+        "rawUrl": "./sample-data/google__adk-python.json",
+        "sha256": "404aebd3652f72d1301185f0f6f1809f5a6ac5f5a48bd7660786e98c2463a765",
+        "schemaVersion": "ultra13/v1alpha1",
+        "capturedAt": "2026-08-12T01:00:44.984159Z",
+        "product": "Ultra13",
+        "buildIdentity": "",
+        "configurationDigest": "sha256:eec1e4868cc0de5c0d245b2bdf111c60a545ffaaf280fbe8c7a0e45351aa14cd",
+        "commit": "0b55dcf9d32e22d4c8b303c3da1c275c135682bf",
+        "maestroRulePack": "2026.09.1",
+        "asiRulePack": "2026.08.1",
+        "maestro": {
+          "controlled": 0,
+          "suspected": 19,
+          "triggered": 0,
+          "unknown": 51,
+          "notApplicable": 0,
+          "total": 70
+        },
+        "asi": {
+          "controlled": 8,
+          "suspected": 0,
+          "triggered": 1,
+          "unknown": 21,
+          "notApplicable": 0,
+          "total": 30
+        },
+        "findingCount": null,
+        "openFindingCount": null
+      },
+      "blocker": "",
+      "notes": "The bundle has no findings collection; the findings component receives 0/15.",
+      "createdAt": "2026-08-12T01:02:00.000Z",
+      "updatedAt": "2026-09-01T18:00:31.165Z"
+    },
+    {
+      "id": "crewaiinc-crewai-examples",
+      "index": 3,
+      "name": "crewai-examples",
+      "repository": "crewaiinc/crewai-examples",
+      "repositoryUrl": "https://github.com/crewAIInc/crewAI-examples",
+      "framework": "crewai",
+      "version": "1.6.1",
+      "stage": "qa",
+      "compatibility": "unsupported",
+      "score": {
+        "version": "ultra13-benchmark-score/v1",
+        "total": 14,
+        "preciseTotal": 14.3,
+        "components": [
+          {
+            "id": "assurance",
+            "label": "Evidence assurance",
+            "points": 10.1,
+            "maximum": 20,
+            "unknownCount": 1,
+            "detail": "Scope 5/5 · compatibility 0/5 · traceability 0.1/5 · completeness 5/5",
+            "sourcePaths": [
+              "$.selectedDeploymentUnit|activeDeploymentUnit.configurationDigest",
+              "$.threatModel|graph|manifest.compatibility",
+              "$.threatModel.maestroAssessments[*].evidence",
+              "$.threatModel.asiAssessments[*].evidence"
+            ]
+          },
+          {
+            "id": "maestro",
+            "label": "MAESTRO outcomes",
+            "points": 0,
+            "maximum": 40,
+            "unknownCount": 0,
+            "detail": "0 controlled/not triggered · 0 suspected · 0 triggered · 0 unknown · 70 not applicable",
+            "sourcePaths": [
+              "$.threatModel.maestroAssessments"
+            ]
+          },
+          {
+            "id": "asi",
+            "label": "OWASP ASI outcomes",
+            "points": 4.2,
+            "maximum": 25,
+            "unknownCount": 25,
+            "detail": "5 controlled/not triggered · 0 suspected · 0 triggered · 25 unknown · 0 not applicable",
+            "sourcePaths": [
+              "$.threatModel.asiAssessments"
+            ]
+          },
+          {
+            "id": "findings",
+            "label": "Open findings",
+            "points": 0,
+            "maximum": 15,
+            "unknownCount": 1,
+            "detail": "No findings collection is present in the bundle; zero points are awarded rather than assuming a clear result.",
+            "sourcePaths": [
+              "$.findings"
+            ]
+          }
+        ],
+        "unknownCount": 27,
+        "evaluatedAt": "2026-09-01T18:00:31.167Z",
+        "method": "static-evidence-only"
+      },
+      "evidence": {
+        "sourceFile": "crewAIInc__crewAI-examples.json",
+        "rawUrl": "./sample-data/crewAIInc__crewAI-examples.json",
+        "sha256": "2a7437315202eaf70849469fb01908d02aa18398e31fed25e80686ad4b38dd11",
+        "schemaVersion": "ultra13/v1alpha1",
+        "capturedAt": "2026-08-12T01:00:46.099872Z",
+        "product": "Ultra13",
+        "buildIdentity": "",
+        "configurationDigest": "sha256:f78b3eda39b6472ce26df3be87808aa3575684bfabe533504d892b18b53cb858",
+        "commit": "da94a91e691e1cf5b3151416bb15b5b62729bea8",
+        "maestroRulePack": "2026.09.1",
+        "asiRulePack": "2026.08.1",
+        "maestro": {
+          "controlled": 0,
+          "suspected": 0,
+          "triggered": 0,
+          "unknown": 0,
+          "notApplicable": 70,
+          "total": 70
+        },
+        "asi": {
+          "controlled": 5,
+          "suspected": 0,
+          "triggered": 0,
+          "unknown": 25,
+          "notApplicable": 0,
+          "total": 30
+        },
+        "findingCount": null,
+        "openFindingCount": null
+      },
+      "blocker": "",
+      "notes": "The bundle has no findings collection; the findings component receives 0/15. Compatibility is unsupported; no supported pairing is assumed.",
+      "createdAt": "2026-08-12T01:02:00.000Z",
+      "updatedAt": "2026-09-01T18:00:31.167Z"
+    }
+  ],
+  "activity": [
+    {
+      "id": "d43364e8-53d1-41a1-9cd3-4051450f92de",
+      "at": "2026-09-01T18:00:31.168Z",
+      "action": "evidence_ingested",
+      "detail": "crewaiinc/crewai-examples: 14/100",
+      "agentId": "crewaiinc-crewai-examples"
+    },
+    {
+      "id": "b0915e38-de9a-4a5c-94eb-45c2441e107a",
+      "at": "2026-09-01T18:00:31.167Z",
+      "action": "evidence_ingested",
+      "detail": "google/adk-python: 25/100",
+      "agentId": "google-adk-python"
+    },
+    {
+      "id": "574680d7-285e-4b2e-8e0e-07197e2a1db7",
+      "at": "2026-09-01T18:00:31.164Z",
+      "action": "evidence_ingested",
+      "detail": "openai/openai-agents-python: 20/100",
+      "agentId": "openai-openai-agents-python"
+    },
+    {
+      "id": "pilot-3",
+      "at": "2026-08-12T01:02:00.000Z",
+      "action": "pilot_loaded",
+      "detail": "Loaded three Ultra13-generated pilot assessment fixtures."
+    }
+  ]
+}

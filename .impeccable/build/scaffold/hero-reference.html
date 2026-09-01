@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Scaffold reference: comp-a.png</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Extra+Condensed:wght@700&family=Poor+Story:wght@400&display=swap">
+  <link rel="stylesheet" href="layout.css">
+  <style>html,body{margin:0}body{background:#f7f7f7}.region{box-sizing:border-box}.region.text p{white-space:pre-wrap}</style>
+</head>
+<body>
+<!-- Reference only. Every region sits at its measured box inside a comp-aspect frame. Take the boxes (layout.css), keep your own semantic structure. -->
+<main class="comp-frame" style="max-width:1586px">
+  <div class="r-topbar region chrome" data-region="topbar"><!-- midnight identity and cohort counter band --></div>
+  <div class="r-masthead region text" data-region="masthead"><!-- ULTRA13 AGENT BENCHMARK --><p style="font-size:var(--r-masthead-font);font-family:var(--r-masthead-family),sans-serif;font-weight:var(--r-masthead-weight);line-height:1.05;margin:0">masthead</p></div>
+  <div class="r-assessed-counter region text" data-region="assessed-counter"><!-- 3 / 100 ASSESSED --><p style="line-height:1.05;margin:0">assessed-counter</p></div>
+  <div class="r-review-counter region text" data-region="review-counter"><!-- 2 IN REVIEW --><p style="line-height:1.05;margin:0">review-counter</p></div>
+  <div class="r-queued-counter region text" data-region="queued-counter"><!-- 95 QUEUED --><p style="line-height:1.05;margin:0">queued-counter</p></div>
+  <div class="r-top-actions region control" data-region="top-actions"><!-- export, refresh, upload controls: rebuild the control's chrome from the crop (comp-spec.mjs --crop top-actions); its ink box, border, fill, radius, and label size are the comp's --></div>
+  <div class="r-workflow-heading region text" data-region="workflow-heading"><!-- WORKFLOW --><p style="font-size:var(--r-workflow-heading-font);line-height:1.05;margin:0">workflow-heading</p></div>
+  <div class="r-workflow-labels region text" data-region="workflow-labels"><!-- stage labels, descriptions, counts --><p style="font-size:var(--r-workflow-labels-font);line-height:1.05;margin:0">workflow-labels</p></div>
+  <div class="r-workflow-rail region chrome" data-region="workflow-rail"><!-- vertical lifecycle track and stage glyphs --></div>
+  <div class="r-plate-heading region text" data-region="plate-heading"><!-- COHORT PLATE --><p style="font-size:var(--r-plate-heading-font);line-height:1.05;margin:0">plate-heading</p></div>
+  <div class="r-plate-legend region text" data-region="plate-legend"><!-- lifecycle state legend --><p style="font-size:var(--r-plate-legend-font);line-height:1.05;margin:0">plate-legend</p></div>
+  <div class="r-cohort-plate region control" data-region="cohort-plate"><!-- interactive 10 by 10 indexed cohort cells: rebuild the control's chrome from the crop (comp-spec.mjs --crop cohort-plate); its ink box, border, fill, radius, and label size are the comp's --></div>
+  <div class="r-inspector-heading region text" data-region="inspector-heading"><!-- AGENT EVIDENCE INSPECTOR --><p style="font-size:var(--r-inspector-heading-font);line-height:1.05;margin:0">inspector-heading</p></div>
+  <div class="r-back-control region control" data-region="back-control"><!-- back to cohort action: rebuild the control's chrome from the crop (comp-spec.mjs --crop back-control); its ink box, border, fill, radius, and label size are the comp's --></div>
+  <div class="r-agent-name region text" data-region="agent-name"><!-- selected repository name and index --><p style="font-size:var(--r-agent-name-font);line-height:1.05;margin:0">agent-name</p></div>
+  <div class="r-score-readout region text" data-region="score-readout"><!-- 82 / 100 derived score --><p style="font-size:var(--r-score-readout-font);font-family:var(--r-score-readout-family),sans-serif;font-weight:var(--r-score-readout-weight);line-height:1.05;margin:0">score-readout</p></div>
+  <div class="r-score-heading region text" data-region="score-heading"><!-- SCORE BREAKDOWN (DERIVED) and column labels --><p style="font-size:var(--r-score-heading-font);line-height:1.05;margin:0">score-heading</p></div>
+  <div class="r-score-components region text" data-region="score-components"><!-- four component rows, weights, normalized scores, weighted points --><p style="font-size:var(--r-score-components-font);line-height:1.05;margin:0">score-components</p></div>
+  <div class="r-evidence-status region text" data-region="evidence-status"><!-- STATIC EVIDENCE status --><p style="font-size:var(--r-evidence-status-font);line-height:1.05;margin:0">evidence-status</p></div>
+  <div class="r-provenance-heading region text" data-region="provenance-heading"><!-- ULTRA13 JSON PROVENANCE DIGEST --><p style="font-size:var(--r-provenance-heading-font);line-height:1.05;margin:0">provenance-heading</p></div>
+  <div class="r-provenance-body region text" data-region="provenance-body"><!-- file, hash, timestamps, schema and source metadata --><p style="font-size:var(--r-provenance-body-font);line-height:1.05;margin:0">provenance-body</p></div>
+  <div class="r-json-control region control" data-region="json-control"><!-- view JSON control: rebuild the control's chrome from the crop (comp-spec.mjs --crop json-control); its ink box, border, fill, radius, and label size are the comp's --></div>
+  <div class="r-distribution-heading region text" data-region="distribution-heading"><!-- SCORE DISTRIBUTION (DERIVED) --><p style="line-height:1.05;margin:0">distribution-heading</p></div>
+  <div class="r-distribution-chart region chrome" data-region="distribution-chart"><!-- labeled score-range histogram and cohort summary --></div>
+  <div class="r-outcome-heading region text" data-region="outcome-heading"><!-- OUTCOME MIX --><p style="font-size:var(--r-outcome-heading-font);line-height:1.05;margin:0">outcome-heading</p></div>
+  <div class="r-maestro-outcomes region text" data-region="maestro-outcomes"><!-- MAESTRO outcome labels, counts and percentages --><p style="font-size:var(--r-maestro-outcomes-font);line-height:1.05;margin:0">maestro-outcomes</p></div>
+  <div class="r-asi-outcomes region text" data-region="asi-outcomes"><!-- OWASP ASI outcome labels, counts and percentages --><p style="font-size:var(--r-asi-outcomes-font);line-height:1.05;margin:0">asi-outcomes</p></div>
+  <div class="r-method-note region text" data-region="method-note"><!-- derived score and unknown evidence note --><p style="font-size:var(--r-method-note-font);line-height:1.05;margin:0">method-note</p></div>
+</main>
+</body>
+</html>

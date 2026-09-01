@@ -1,0 +1,4 @@
+repository,name,framework,version,repositoryUrl,notes
+openai/openai-agents-python,OpenAI Agents Python,openai-agents,0.19.4,https://github.com/openai/openai-agents-python,Pilot cohort identity
+google/adk-python,Google ADK Python,google-adk,2.6.3,https://github.com/google/adk-python,Pilot cohort identity
+crewaiinc/crewai-examples,CrewAI Examples,crewai,1.6.1,https://github.com/crewAIInc/crewAI-examples,Pilot cohort identity

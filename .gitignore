@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.DS_Store
+
+# Local or intermediate visual-review products.
+.impeccable/review/diff/
+.impeccable/review/*.png.png
+.impeccable/review/hero-repro*.png
+.impeccable/review/mobile-clip.png
+.impeccable/review/mobile-probe.png
+.impeccable/review/detector-*.json

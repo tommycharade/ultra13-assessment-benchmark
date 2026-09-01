@@ -1,0 +1,16 @@
+{
+  "regions": [
+    { "id": "topbar", "kind": "chrome", "grid": "A0:J0", "container": true, "note": "identity, counters and action band; one filled compositional plane because the dark ground prevents reliable semantic separation" },
+    { "id": "workflow-rail", "kind": "chrome", "grid": "A1:B7", "container": true, "note": "vertical lifecycle plane with stage labels and glyphs" },
+    { "id": "workflow-labels", "kind": "text", "grid": "A1:B7", "note": "stage names, descriptions and counts" },
+    { "id": "plate-heading", "kind": "text", "grid": "B1:C1", "note": "COHORT PLATE" },
+    { "id": "cohort-plate", "kind": "control", "grid": "B1:G7", "container": true, "note": "interactive 10 by 10 indexed cohort cells" },
+    { "id": "inspector-plane", "kind": "chrome", "grid": "G1:J7", "container": true, "note": "selected-agent identity, score, provenance and workflow controls" },
+    { "id": "score-components", "kind": "text", "grid": "G3:J5", "note": "four component rows, weights, normalized scores and weighted points" },
+    { "id": "provenance-heading", "kind": "text", "grid": "G5:I6", "note": "ULTRA13 JSON PROVENANCE DIGEST" },
+    { "id": "provenance-body", "kind": "text", "grid": "G6:J7", "note": "file, hash, timestamps, schema and source metadata" },
+    { "id": "distribution-chart", "kind": "chrome", "grid": "A8:F9", "container": true, "note": "labeled score-range histogram and cohort summary" },
+    { "id": "outcome-heading", "kind": "text", "grid": "F7:H8", "note": "OUTCOME MIX" },
+    { "id": "outcome-body", "kind": "chrome", "box": { "x": 0.52, "y": 0.75, "w": 0.48, "h": 0.25 }, "container": true, "note": "MAESTRO and OWASP ASI outcome tables; live labels and values are allowed to differ from the concept comp" }
+  ]
+}

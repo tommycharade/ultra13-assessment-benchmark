@@ -1,0 +1,12 @@
+{
+  "viewport": { "width": 390, "height": 844 },
+  "document": { "scrollWidth": 390, "scrollHeight": 2744 },
+  "horizontalOverflow": false,
+  "segments": [
+    { "file": "mobile-1.png", "scrollY": 0, "covers": "0-844" },
+    { "file": "mobile-2.png", "scrollY": 700, "covers": "700-1544" },
+    { "file": "mobile-3.png", "scrollY": 1400, "covers": "1400-2244" },
+    { "file": "mobile-4.png", "scrollY": 1900, "covers": "1900-2744" }
+  ],
+  "note": "Overlaps are intentional so the fixed view switcher never obscures unverified document content. Responsive views reserve 64px of bottom clearance, allowing the final outcome rows to scroll fully above the switcher. The browser's fullPage capture path was rejected because it produced a duplicated stitch."
+}

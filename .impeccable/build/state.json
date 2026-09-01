@@ -1,0 +1,357 @@
+{
+  "tool": "build-phase",
+  "version": 2,
+  "startedAt": "2026-09-01T17:23:01.005Z",
+  "comp": ".impeccable/mocks/comp-a.png",
+  "direction": "0ae5c264",
+  "breakpoint": "1586x992",
+  "artifact": null,
+  "phase": "review",
+  "phases": {
+    "comps": {
+      "status": "closed",
+      "openedAt": "2026-09-01T17:23:01.005Z",
+      "closedAt": "2026-09-01T17:30:53.739Z",
+      "attempts": 2,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "3 comps, 1 approved",
+        "approved": ".impeccable/mocks/comp-a.png",
+        "at": "2026-09-01T17:30:53.738Z"
+      },
+      "forced": null
+    },
+    "spec": {
+      "status": "closed",
+      "openedAt": "2026-09-01T17:30:53.779Z",
+      "closedAt": "2026-09-01T17:32:28.345Z",
+      "attempts": 2,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "28 regions, 0 plates, 21 text regions measured",
+        "at": "2026-09-01T17:32:28.344Z"
+      },
+      "forced": null
+    },
+    "plates": {
+      "status": "closed",
+      "openedAt": "2026-09-01T17:32:28.345Z",
+      "closedAt": "2026-09-01T17:32:32.239Z",
+      "attempts": 1,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "no plates owed",
+        "at": "2026-09-01T17:32:32.239Z"
+      },
+      "forced": null
+    },
+    "hero": {
+      "status": "closed",
+      "openedAt": "2026-09-01T17:32:32.239Z",
+      "closedAt": "2026-09-01T17:59:54.709Z",
+      "attempts": 2,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "hero 73% (drift)",
+        "score": 0.7282,
+        "verdict": "drift",
+        "report": ".impeccable/review/diff/hero/report.json",
+        "sideBySide": ".impeccable/review/diff/hero/side-by-side.png",
+        "worst": [
+          "topbar contradicted 52%",
+          "plate-heading drift 57%",
+          "provenance-body drift 60%"
+        ],
+        "worstIds": [
+          "topbar",
+          "plate-heading",
+          "provenance-body"
+        ],
+        "worstCrops": [
+          {
+            "id": "topbar",
+            "verdict": "contradicted",
+            "score": {
+              "overall": 0.5172,
+              "structure": 0.4361,
+              "color": 0.7905,
+              "colorIntersection": 0.5495,
+              "paletteMatch": 0.9203,
+              "detail": 0.246,
+              "detailRaw": 0.3241,
+              "detailAdded": 0.1563,
+              "bands": 0.7029
+            },
+            "file": ".impeccable/review/diff/hero/regions/topbar.png"
+          },
+          {
+            "id": "plate-heading",
+            "verdict": "drift",
+            "score": {
+              "overall": 0.5702,
+              "structure": 0.6434,
+              "color": 0.7728,
+              "colorIntersection": 0.5565,
+              "paletteMatch": 0.8892,
+              "detail": 0.1926,
+              "detailRaw": 0.328,
+              "detailAdded": 0.2708,
+              "bands": 0.2643
+            },
+            "file": ".impeccable/review/diff/hero/regions/plate-heading.png"
+          },
+          {
+            "id": "provenance-body",
+            "verdict": "drift",
+            "score": {
+              "overall": 0.5999,
+              "structure": 0.545,
+              "color": 0.8974,
+              "colorIntersection": 0.862,
+              "paletteMatch": 0.9165,
+              "detail": 0.1803,
+              "detailRaw": 0.2115,
+              "detailAdded": 0.0625,
+              "bands": 0.76
+            },
+            "file": ".impeccable/review/diff/hero/regions/provenance-body.png"
+          }
+        ],
+        "advisories": [
+          "(advisory, above the 72% bar; fix in the polish pass before responsive) 3 readings:",
+          "  text provenance-body: ink is #181828 in the build, #7c7f89 in the comp; use the comp's colour",
+          "  text outcome-heading: ink is #5e5f62 in the build, #08b7ef in the comp; use the comp's colour",
+          "  text maestro-outcomes: ink is #bbbbbe in the build, #09b7ee in the comp; use the comp's colour",
+          "(advisory, unchanged for 3+ attempts) text workflow-labels: 6 lines in the build, 2 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape",
+          "(advisory, unchanged for 3+ attempts) text distribution-heading: ink is #161a29 in the build, #0849c2 in the comp; use the comp's colour",
+          "(advisory, unchanged for 3+ attempts) chrome distribution-chart: its rule sits 99px into the box in the comp and 128px in the build (+29px), so the strip is taller than the comp's; match the height, not only the position"
+        ],
+        "regionVerdicts": {
+          "topbar": "contradicted",
+          "workflow-rail": "drift",
+          "workflow-labels": "drift",
+          "plate-heading": "drift",
+          "plate-legend": "drift",
+          "cohort-plate": "drift",
+          "inspector-plane": "drift",
+          "score-components": "drift",
+          "provenance-heading": "drift",
+          "provenance-body": "drift",
+          "distribution-heading": "drift",
+          "distribution-chart": "drift",
+          "outcome-heading": "drift",
+          "maestro-outcomes": "drift",
+          "asi-outcomes": "drift",
+          "method-note": "drift"
+        },
+        "at": "2026-09-01T17:59:54.708Z"
+      },
+      "forced": null,
+      "readingsSeen": {
+        "text inspector-heading: cap height 7.7px in the build, 16.9px in the comp (-54%); set font-size so the cap height renders at 16.9px": 3,
+        "text agent-name: cap height 7.7px in the build, 16.9px in the comp (-54%); set font-size so the cap height renders at 16.9px": 3,
+        "text score-readout: cap height 27.3px in the build, 39px in the comp (-30%); set font-size so the cap height renders at 39px (font-match ranked Poor Story 400 at 56px)": 3,
+        "text score-components: cap height 7.6px in the build, 10px in the comp (-24%); set font-size so the cap height renders at 10px": 3,
+        "text workflow-labels: 5 lines in the build, 2 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape": 4,
+        "text score-components: 8 lines in the build, 4 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape": 3,
+        "text plate-heading: ink is #131728 in the build, #12b7c1 in the comp; use the comp's colour": 3,
+        "text plate-legend: ink is #464849 in the build, #909195 in the comp; use the comp's colour": 3,
+        "text score-heading: ink is #464a4f in the build, #8d96a6 in the comp; use the comp's colour": 3,
+        "text evidence-status: ink is #abafb3 in the build, #99e9f0 in the comp; use the comp's colour": 3,
+        "text outcome-heading: ink is #b1b3b6 in the build, #08b7ef in the comp; use the comp's colour": 3,
+        "text maestro-outcomes: ink is #959698 in the build, #09b7ee in the comp; use the comp's colour": 3,
+        "text masthead: its first line starts 17px higher than in the comp (0px vs 17px into the region box); the spacing above it is too small": 6,
+        "text inspector-heading: cap height 25.5px in the build, 16.9px in the comp (+51%); set font-size so the cap height renders at 16.9px": 1,
+        "text agent-name: cap height 25.8px in the build, 16.9px in the comp (+53%); set font-size so the cap height renders at 16.9px": 1,
+        "text score-components: letter-spacing is wider than the comp's (gap 0.107 vs 0.067 of the cap height); set letter-spacing to close it by about 0px": 1,
+        "text score-readout: the face renders 40% lighter than the comp's (ink density 0.26 vs 0.43); raise a weight step or use the ranked face": 1,
+        "text score-components: the face renders 27% heavier than the comp's (ink density 0.76 vs 0.60); drop a weight step or use the ranked face": 1,
+        "text score-heading: ink is #121428 in the build, #8d96a6 in the comp; use the comp's colour": 1,
+        "text evidence-status: ink is #47494d in the build, #99e9f0 in the comp; use the comp's colour": 1,
+        "text provenance-heading: ink is #111121 in the build, #7d7f8a in the comp; use the comp's colour": 1,
+        "text outcome-heading: ink is #b9bbbe in the build, #08b7ef in the comp; use the comp's colour": 1,
+        "text maestro-outcomes: ink is #949696 in the build, #09b7ee in the comp; use the comp's colour": 1,
+        "text score-readout: cap height 49px in the build, 39px in the comp (+26%); set font-size so the cap height renders at 39px (font-match ranked Poor Story 400 at 56px)": 1,
+        "text masthead: 1 line in the build, 2 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape": 2,
+        "text workflow-labels: 6 lines in the build, 2 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape": 4,
+        "text inspector-heading: the face renders 60% heavier than the comp's (ink density 0.75 vs 0.47); drop a weight step or use the ranked face": 1,
+        "text agent-name: the face renders 54% heavier than the comp's (ink density 0.74 vs 0.48); drop a weight step or use the ranked face": 1,
+        "text assessed-counter: ink is #47576d in the build, #f7f7f7 in the comp; use the comp's colour": 1,
+        "text review-counter: ink is #3d4c69 in the build, #f8f8f8 in the comp; use the comp's colour": 1,
+        "text queued-counter: ink is #aab4c2 in the build, #f7f7f7 in the comp; use the comp's colour": 1,
+        "text evidence-status: ink is #9a999a in the build, #99e9f0 in the comp; use the comp's colour": 1,
+        "text provenance-body: ink is #181828 in the build, #7c7f89 in the comp; use the comp's colour": 3,
+        "text distribution-heading: ink is #161a29 in the build, #0849c2 in the comp; use the comp's colour": 4,
+        "text outcome-heading: ink is #5e5f62 in the build, #08b7ef in the comp; use the comp's colour": 3,
+        "text maestro-outcomes: ink is #bbbbbe in the build, #09b7ee in the comp; use the comp's colour": 3,
+        "text workflow-heading: its first line starts 23px lower than in the comp (29px vs 6px into the region box); the spacing above it is too large": 2,
+        "text inspector-heading: its first line starts 21px lower than in the comp (21px vs 0px into the region box); the spacing above it is too large": 1,
+        "text agent-name: its first line starts 21px lower than in the comp (21px vs 0px into the region box); the spacing above it is too large": 1,
+        "chrome distribution-chart: its rule sits 99px into the box in the comp and 128px in the build (+29px), so the strip is taller than the comp's; match the height, not only the position": 4,
+        "text agent-name: letter-spacing is tighter than the comp's (gap 0.036 vs 0.089 of the cap height); set letter-spacing to open it by about 1px": 1,
+        "text score-components: cap height 6.5px in the build, 10px in the comp (-35%); set font-size so the cap height renders at 10px": 1,
+        "text workflow-labels: 8 lines in the build, 2 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape": 1,
+        "text agent-name: ink is #888e96 in the build, #090e31 in the comp; use the comp's colour": 1,
+        "text evidence-status: ink is #989897 in the build, #99e9f0 in the comp; use the comp's colour": 1,
+        "text provenance-heading: ink is #191c22 in the build, #7d7f8a in the comp; use the comp's colour": 1,
+        "text outcome-heading: ink is #88898c in the build, #08b7ef in the comp; use the comp's colour": 1,
+        "text maestro-outcomes: ink is #838484 in the build, #09b7ee in the comp; use the comp's colour": 1,
+        "text workflow-labels: it starts 63px further right than in the comp": 1,
+        "text score-components: 3 lines in the build, 4 in the comp; the measure (max-width, font-size, letter-spacing) wraps it differently, so the block is a different shape": 1,
+        "text inspector-heading: the face renders 59% heavier than the comp's (ink density 0.74 vs 0.47); drop a weight step or use the ranked face": 1,
+        "text agent-name: the face renders 43% heavier than the comp's (ink density 0.69 vs 0.48); drop a weight step or use the ranked face": 1,
+        "text assessed-counter: ink is #4a596f in the build, #f7f7f7 in the comp; use the comp's colour": 1,
+        "text review-counter: ink is #394763 in the build, #f8f8f8 in the comp; use the comp's colour": 1,
+        "text queued-counter: ink is #a9b1c0 in the build, #f7f7f7 in the comp; use the comp's colour": 1,
+        "text evidence-status: ink is #9a9a99 in the build, #99e9f0 in the comp; use the comp's colour": 1,
+        "text provenance-heading: ink is #1d2323 in the build, #7d7f8a in the comp; use the comp's colour": 1,
+        "text outcome-heading: ink is #555659 in the build, #08b7ef in the comp; use the comp's colour": 1,
+        "text maestro-outcomes: ink is #b8babd in the build, #09b7ee in the comp; use the comp's colour": 1,
+        "text inspector-heading: its first line starts 15px lower than in the comp (15px vs 0px into the region box); the spacing above it is too large": 1
+      },
+      "records": 7,
+      "history": [
+        {
+          "at": "2026-09-01T17:52:44.549Z",
+          "score": 0.7184,
+          "worstIds": [
+            "score-heading",
+            "json-control",
+            "evidence-status"
+          ],
+          "regionVerdicts": {
+            "topbar": "drift",
+            "masthead": "drift",
+            "assessed-counter": "drift",
+            "review-counter": "drift",
+            "queued-counter": "drift",
+            "top-actions": "drift",
+            "workflow-heading": "drift",
+            "workflow-labels": "drift",
+            "workflow-rail": "drift",
+            "plate-heading": "drift",
+            "plate-legend": "missing",
+            "cohort-plate": "drift",
+            "inspector-heading": "contradicted",
+            "back-control": "contradicted",
+            "agent-name": "drift",
+            "score-readout": "contradicted",
+            "score-heading": "missing",
+            "score-components": "contradicted",
+            "evidence-status": "contradicted",
+            "provenance-heading": "missing",
+            "provenance-body": "missing",
+            "json-control": "contradicted",
+            "distribution-heading": "drift",
+            "distribution-chart": "drift",
+            "outcome-heading": "drift",
+            "maestro-outcomes": "drift",
+            "asi-outcomes": "drift",
+            "method-note": "missing"
+          },
+          "artifactHash": "c737a6483be7"
+        },
+        {
+          "at": "2026-09-01T17:59:54.709Z",
+          "score": 0.7282,
+          "worstIds": [
+            "topbar",
+            "plate-heading",
+            "provenance-body"
+          ],
+          "regionVerdicts": {
+            "topbar": "contradicted",
+            "workflow-rail": "drift",
+            "workflow-labels": "drift",
+            "plate-heading": "drift",
+            "plate-legend": "drift",
+            "cohort-plate": "drift",
+            "inspector-plane": "drift",
+            "score-components": "drift",
+            "provenance-heading": "drift",
+            "provenance-body": "drift",
+            "distribution-heading": "drift",
+            "distribution-chart": "drift",
+            "outcome-heading": "drift",
+            "maestro-outcomes": "drift",
+            "asi-outcomes": "drift",
+            "method-note": "drift"
+          },
+          "artifactHash": "c737a6483be7"
+        }
+      ]
+    },
+    "sections": {
+      "status": "closed",
+      "openedAt": "2026-09-01T17:59:54.709Z",
+      "closedAt": "2026-09-01T18:02:42.737Z",
+      "attempts": 1,
+      "notes": [
+        {
+          "at": "2026-09-01T18:02:42.668Z",
+          "text": "Beyond the approved comp, the ledger and methodology views add operational detail; the masthead queue label is clarified as cohort capacity, and pilot values are replaced by three real Ultra13 bundles."
+        }
+      ],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "no mechanical gate",
+        "at": "2026-09-01T18:02:42.736Z"
+      },
+      "forced": null
+    },
+    "motion": {
+      "status": "closed",
+      "openedAt": "2026-09-01T18:02:42.737Z",
+      "closedAt": "2026-09-01T18:03:07.751Z",
+      "attempts": 1,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "no mechanical gate",
+        "at": "2026-09-01T18:03:07.750Z"
+      },
+      "forced": null
+    },
+    "responsive": {
+      "status": "closed",
+      "openedAt": "2026-09-01T18:03:07.751Z",
+      "closedAt": "2026-09-01T18:11:18.265Z",
+      "attempts": 4,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "desktop 67% (drift)",
+        "score": 0.67,
+        "sideBySide": ".impeccable/review/diff/desktop/side-by-side.png",
+        "at": "2026-09-01T18:11:18.264Z"
+      },
+      "forced": null
+    },
+    "review": {
+      "status": "closed",
+      "openedAt": "2026-09-01T18:11:18.265Z",
+      "closedAt": "2026-09-01T18:20:57.412Z",
+      "attempts": 0,
+      "notes": [],
+      "gate": null,
+      "forced": null
+    }
+  },
+  "finish": {
+    "disposition": "ship",
+    "at": "2026-09-01T18:20:57.411Z",
+    "phaseAtFinish": "review"
+  },
+  "plates": {}
+}
