@@ -33,6 +33,18 @@ The published snapshot was created by uploading three existing Ultra13-generated
 
 These low pilot values mostly reflect unknown rule outcomes and missing findings arrays. They should not be presented as a claim that one framework is categorically insecure. CrewAI's bundle also reports an unsupported compatibility pairing, while its 70 MAESTRO rules are not applicable and therefore do not earn outcome points.
 
+## 4 September 2026 rerun
+
+The deployed Ultra13 UI successfully discovered and bound the intended deployment units for all three pilot repositories, but the assessment phase did not produce scorable evidence:
+
+| Agent | Selected commit | Discovery candidates | Latest exported job | Current score | Previous completed score |
+| --- | --- | ---: | --- | ---: | ---: |
+| `openai/openai-agents-python` | `e3d7c1727bf4` | 23 | `scan:failed` | Unscored | 20/100 |
+| `google/adk-python` | `44e0b2a8b121` | 44 | `scan:failed` | Unscored | 25/100 |
+| `crewaiinc/crewai-examples` | `da94a91e691e` | 35 | `discover:succeeded`; no assessment job exported | Unscored | 14/100 |
+
+The dashboard records these as blocked attempts. Previous scores remain available only as historical baselines and are excluded from current score distribution and aggregate outcome calculations. The Google ADK rerun resolved `HEAD` to a newer commit than the earlier pilot, so it is not a same-revision comparison.
+
 ## Benchmark Score v1
 
 | Component | Points | Ultra13-derived calculation |
@@ -131,7 +143,7 @@ This is the workflow Codex will use to update and check assessment progress. Do 
 - Processing: entirely in the browser.
 - Analytics/telemetry: none.
 
-On startup, local state takes precedence over the published snapshot. If neither exists, the application renders an empty 100-slot cohort. It never falls back to invented agents or scores.
+On startup, the newest checkpoint wins between local state and the published snapshot. If neither exists, the application renders an empty 100-slot cohort. It never falls back to invented agents or scores.
 
 ## Project structure
 

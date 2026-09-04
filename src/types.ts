@@ -58,7 +58,20 @@ export interface EvidenceSummary {
   asi: OutcomeCounts;
   findingCount: number | null;
   openFindingCount: number | null;
+  assessmentStatus?: 'complete' | 'failed' | 'not-produced' | 'unknown';
+  scanMode?: string;
+  scanStatus?: string;
+  candidateTotal?: number | null;
   rawUrl?: string;
+}
+
+export interface PreviousBenchmarkResult {
+  label: string;
+  score: BenchmarkScore;
+  evidence: EvidenceSummary;
+  compatibility: CompatibilityStatus;
+  framework: string;
+  version: string;
 }
 
 export interface AgentRecord {
@@ -73,6 +86,7 @@ export interface AgentRecord {
   compatibility: CompatibilityStatus;
   score: BenchmarkScore | null;
   evidence: EvidenceSummary | null;
+  previousResult?: PreviousBenchmarkResult;
   blocker: string;
   notes: string;
   createdAt: string;

@@ -181,6 +181,9 @@ svg { display: block; }
 .secondary-action:hover { background: #eef4ff; }
 .secondary-action.danger { color: #a52f22; border-color: #d7a69e; }
 .empty-evidence { padding: 1rem; color: var(--ink-soft); font-size: 12px; }
+.blocked-evidence { min-height: 188px; border-left: 6px solid var(--coral); background: #fff1ed; }
+.blocked-evidence strong { color: #912f23; font-family: var(--display); font-size: 19px; letter-spacing: .025em; text-transform: uppercase; }
+.blocked-evidence p { margin-top: .55rem; line-height: 1.4; }
 .inspector-empty { margin-top: 2rem; padding: 1.2rem; border: 1px dashed var(--line-dark); }
 .inspector-empty strong { font-family: var(--display); font-size: 24px; text-transform: uppercase; }
 .inspector-empty p { margin-top: .4rem; color: var(--ink-soft); }

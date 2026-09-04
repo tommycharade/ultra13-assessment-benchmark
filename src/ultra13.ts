@@ -1,4 +1,4 @@
-import { calculateBenchmarkScore, countOutcomes, getThreatAssessments } from './scoring';
+import { calculateBenchmarkScore, countOutcomes, getThreatAssessments } from './scoring.ts';
 import type {
   AgentRecord,
   CompatibilityStatus,
@@ -88,7 +88,8 @@ export const isUltra13Bundle = (root: JsonObject): boolean => {
   );
   const product = asString(root.product).toLowerCase();
   const hasKnownEnvelope = Boolean(root.application && (root.graph || root.canonicalAgentGraph) && root.manifest);
-  return hasAssessmentArrays || product.includes('ultra13') || hasKnownEnvelope;
+  const hasDecisionEnvelope = Boolean(root.application && (root.latestScanJob || root.activeDeploymentUnit));
+  return hasAssessmentArrays || product.includes('ultra13') || hasKnownEnvelope || hasDecisionEnvelope;
 };
 
 export const parseUltra13Bundle = async (
@@ -110,6 +111,11 @@ export const parseUltra13Bundle = async (
 
   const application = asObject(root.application) ?? {};
   const selectedUnit = asObject(root.selectedDeploymentUnit ?? root.activeDeploymentUnit) ?? {};
+  const latestScanJob = asObject(root.latestScanJob) ?? {};
+  const threat = asObject(root.threatModel);
+  const hasAssessmentArrays = Boolean(
+    threat && (Array.isArray(threat.maestroAssessments) || Array.isArray(threat.asiAssessments)),
+  );
   const compatibility = compatibilityFrom(root);
   const repository = firstString(
     application.repository,
@@ -123,7 +129,7 @@ export const parseUltra13Bundle = async (
   const framework = firstString(application.framework, compatibility?.framework, compatibility?.package, 'unknown');
   const version = firstString(compatibility?.version, compatibility?.constraint, 'unknown');
   const status = normalizeCompatibility(firstString(compatibility?.status, root.expectedCompatibility, 'unknown'));
-  const score = calculateBenchmarkScore(root, now);
+  const score = hasAssessmentArrays ? calculateBenchmarkScore(root, now) : null;
   const { maestro, asi } = getThreatAssessments(root);
   const threatModel = asObject(root.threatModel) ?? {};
   const findingsPresent = Array.isArray(root.findings);
@@ -145,6 +151,8 @@ export const parseUltra13Bundle = async (
   );
   const capturedAt = firstString(
     root.exportedAt,
+    latestScanJob.completedAt,
+    latestScanJob.updatedAt,
     nested(root, ['latestScan', 'scannedAt']),
     nested(root, ['threatModel', 'metadata', 'generatedAt']),
     application.createdAt,
@@ -172,12 +180,31 @@ export const parseUltra13Bundle = async (
     asi: countOutcomes(asi),
     findingCount: findingsPresent ? findings.length : null,
     openFindingCount: findingsPresent ? openFindings.length : null,
+    assessmentStatus: hasAssessmentArrays
+      ? 'complete'
+      : asString(latestScanJob.status).toLowerCase() === 'failed'
+        ? 'failed'
+        : selectedUnit.configurationDigest
+          ? 'not-produced'
+          : 'unknown',
+    scanMode: asString(latestScanJob.mode),
+    scanStatus: asString(latestScanJob.status),
+    candidateTotal:
+      typeof root.deploymentCandidateTotal === 'number' ? root.deploymentCandidateTotal : null,
   };
 
   const warnings: string[] = [];
-  if (!findingsPresent) warnings.push('The bundle has no valid findings array; the findings component receives 0/15.');
-  if (maestro.length === 0) warnings.push('No MAESTRO assessments were found.');
-  if (asi.length === 0) warnings.push('No OWASP ASI assessments were found.');
+  if (!hasAssessmentArrays) {
+    warnings.push('Ultra13 did not produce scorable assessment evidence; this import remains unscored.');
+    if (evidence.assessmentStatus === 'failed') warnings.push('The latest exported scan job has failed status.');
+    else if (evidence.assessmentStatus === 'not-produced') {
+      warnings.push(`The latest exported job is ${evidence.scanMode || 'unknown'}:${evidence.scanStatus || 'unknown'}; no assessment job is present.`);
+    }
+  } else {
+    if (!findingsPresent) warnings.push('The bundle has no valid findings array; the findings component receives 0/15.');
+    if (maestro.length === 0) warnings.push('No MAESTRO assessments were found.');
+    if (asi.length === 0) warnings.push('No OWASP ASI assessments were found.');
+  }
   if (!configurationDigest) warnings.push('No deployment configuration digest was found.');
   if (status !== 'supported') warnings.push(`Compatibility is ${status}; no supported pairing is assumed.`);
 
@@ -190,11 +217,15 @@ export const parseUltra13Bundle = async (
     repositoryUrl,
     framework,
     version,
-    stage: 'qa',
+    stage: score ? 'qa' : 'blocked',
     compatibility: status,
     score,
     evidence,
-    blocker: '',
+    blocker: score
+      ? ''
+      : evidence.assessmentStatus === 'failed'
+        ? `Ultra13 ${evidence.scanMode || 'assessment'} job failed for ${commit.slice(0, 12) || 'the selected revision'}.`
+        : `Ultra13 exported the selected scope, but no assessment result was produced; latest job ${evidence.scanMode || 'unknown'}:${evidence.scanStatus || 'unknown'}.`,
     notes: warnings.join(' '),
     createdAt: firstString(application.createdAt, capturedAt, now),
     updatedAt: now,

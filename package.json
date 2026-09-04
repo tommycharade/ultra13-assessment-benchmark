@@ -10,6 +10,7 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
+    "publish:rerun": "node --experimental-strip-types scripts/publish-rerun-state.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "check": "npm run test && npm run build"

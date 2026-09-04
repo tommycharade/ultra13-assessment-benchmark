@@ -7,6 +7,7 @@ import '@fontsource/azeret-mono/latin-600.css';
 import './styles.css';
 
 import { fallbackState } from './demo';
+import { mergeAgentRecord } from './merge';
 import { downloadCsv, downloadJson, getRawEvidence, loadLocalState, saveLocalState, saveRawEvidence } from './storage';
 import type { ActivityItem, AgentRecord, AssessmentState, JsonObject, OutcomeCounts, Stage } from './types';
 import { parseCohortManifest, parseUltra13Bundle } from './ultra13';
@@ -40,7 +41,12 @@ const loadPublishedState = async (): Promise<AssessmentState | null> => {
   }
 };
 
-let state: AssessmentState = structuredClone(loadLocalState() ?? (await loadPublishedState()) ?? fallbackState);
+const localState = loadLocalState();
+const publishedState = await loadPublishedState();
+const newestState = [localState, publishedState]
+  .filter((candidate): candidate is AssessmentState => candidate !== null)
+  .sort((left, right) => Date.parse(right.generatedAt) - Date.parse(left.generatedAt))[0];
+let state: AssessmentState = structuredClone(newestState ?? fallbackState);
 let activeStageFilter: Stage | 'all' = 'all';
 let activeView: 'observatory' | 'ledger' | 'method' = 'observatory';
 let toastTimer = 0;
@@ -203,7 +209,10 @@ const workflowRail = (): string => {
 };
 
 const componentRows = (agent: AgentRecord): string => {
-  if (!agent.score) return '<div class="empty-evidence">No score until Ultra13 evidence is uploaded.</div>';
+  if (!agent.score) {
+    const previous = agent.previousResult;
+    return `<div class="empty-evidence blocked-evidence"><strong>Current assessment unscored.</strong><p>${escapeHtml(agent.blocker || 'Ultra13 did not produce a scorable assessment bundle.')}</p>${previous ? `<p>Previous completed baseline: <b>${previous.score.total}/100</b> (${escapeHtml(previous.evidence.capturedAt.slice(0, 10))}). It is retained for comparison, not counted as the current result.</p>` : ''}</div>`;
+  }
   return agent.score.components
     .map((component) => {
       const percent = Math.round((component.points / component.maximum) * 100);
@@ -220,12 +229,12 @@ const inspector = (agent: AgentRecord | null): string => {
   return `
     <div class="inspector-intro">
       <div><h2>${escapeHtml(agent.name)}</h2><a href="${safeHref(agent.repositoryUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(agent.repository)}</a></div>
-      <div class="score-box"><span class="score-number">${agent.score?.total ?? '—'}</span><span class="score-denominator">/ 100</span><small>Derived benchmark score</small></div>
+      <div class="score-box"><span class="score-number">${agent.score?.total ?? '—'}</span><span class="score-denominator">/ 100</span><small>${agent.score ? 'Derived benchmark score' : 'Current rerun unscored'}</small></div>
     </div>
     <div class="compat-line"><span class="status-dot ${agent.compatibility}"></span>Agent ${String(agent.index).padStart(3, '0')} · ${escapeHtml(agent.framework)} ${escapeHtml(agent.version)} · ${escapeHtml(agent.compatibility)} · ${escapeHtml(stageLabels[agent.stage].label)}</div>
     <section class="score-panel"><header><h3>SCORE BREAKDOWN (DERIVED)</h3><button class="text-action" id="method-link">View method</button></header>${componentRows(agent)}<p class="static-label">STATIC EVIDENCE</p></section>
     <section class="provenance-panel"><header><h3>ULTRA13 JSON PROVENANCE DIGEST</h3><button class="text-action" id="view-json" ${evidence ? '' : 'disabled'}>VIEW JSON</button></header>
-      ${evidence ? `<dl><div><dt>file</dt><dd>${escapeHtml(evidence.sourceFile)}</dd></div><div><dt>sha256</dt><dd title="${escapeHtml(evidence.sha256)}">${escapeHtml(evidence.sha256.slice(0, 30))}…</dd></div><div><dt>captured_at</dt><dd>${escapeHtml(evidence.capturedAt)}</dd></div><div><dt>schema</dt><dd>${escapeHtml(evidence.schemaVersion)}</dd></div><div><dt>configuration</dt><dd title="${escapeHtml(evidence.configurationDigest)}">${escapeHtml(evidence.configurationDigest.slice(0, 30) || 'unknown')}${evidence.configurationDigest.length > 30 ? '…' : ''}</dd></div><div><dt>commit</dt><dd>${escapeHtml(evidence.commit.slice(0, 12) || 'unknown')}</dd></div></dl>` : '<p class="empty-evidence">No Ultra13 evidence bundle ingested.</p>'}
+      ${evidence ? `<dl><div><dt>file</dt><dd>${escapeHtml(evidence.sourceFile)}</dd></div><div><dt>sha256</dt><dd title="${escapeHtml(evidence.sha256)}">${escapeHtml(evidence.sha256.slice(0, 30))}…</dd></div><div><dt>status</dt><dd>${escapeHtml([evidence.assessmentStatus, evidence.scanMode, evidence.scanStatus].filter(Boolean).join(' · ') || 'complete')}</dd></div><div><dt>captured_at</dt><dd>${escapeHtml(evidence.capturedAt)}</dd></div><div><dt>configuration</dt><dd title="${escapeHtml(evidence.configurationDigest)}">${escapeHtml(evidence.configurationDigest.slice(0, 30) || 'unknown')}${evidence.configurationDigest.length > 30 ? '…' : ''}</dd></div><div><dt>commit</dt><dd>${escapeHtml(evidence.commit.slice(0, 12) || 'unknown')}</dd></div></dl>` : '<p class="empty-evidence">No Ultra13 evidence bundle ingested.</p>'}
     </section>
     <div class="inspector-actions"><button class="secondary-action" id="advance-agent">${icon('arrow', 17)} Advance stage</button><button class="secondary-action danger" id="toggle-block">${icon(agent.stage === 'blocked' ? 'check' : 'block', 17)} ${agent.stage === 'blocked' ? 'Clear blocker' : 'Mark blocked'}</button></div>`;
 };
@@ -281,7 +290,7 @@ const renderLedger = (): string => {
     .filter((agent) => activeStageFilter === 'all' || agent.stage === activeStageFilter)
     .sort((a, b) => a.index - b.index);
   const rows = agents
-    .map((agent) => `<tr data-agent-id="${escapeHtml(agent.id)}"><td>${String(agent.index).padStart(3, '0')}</td><td><strong>${escapeHtml(agent.name)}</strong><small>${escapeHtml(agent.repository)}</small></td><td>${escapeHtml(agent.framework)}</td><td class="mono">${escapeHtml(agent.version)}</td><td><span class="stage-pill ${agent.stage}">${escapeHtml(stageLabels[agent.stage].label)}</span></td><td>${agent.evidence ? 'JSON + digest' : 'Awaiting evidence'}</td><td class="ledger-score">${agent.score ? `${agent.score.total}<small>/100</small>` : '—'}</td><td class="mono">${escapeHtml(agent.updatedAt.slice(0, 10))}</td></tr>`)
+    .map((agent) => `<tr data-agent-id="${escapeHtml(agent.id)}"><td>${String(agent.index).padStart(3, '0')}</td><td><strong>${escapeHtml(agent.name)}</strong><small>${escapeHtml(agent.repository)}</small></td><td>${escapeHtml(agent.framework)}</td><td class="mono">${escapeHtml(agent.version)}</td><td><span class="stage-pill ${agent.stage}">${escapeHtml(stageLabels[agent.stage].label)}</span></td><td>${agent.evidence ? `${agent.evidence.assessmentStatus === 'complete' || !agent.evidence.assessmentStatus ? 'Assessment' : 'Attempt'} JSON + digest` : 'Awaiting evidence'}</td><td class="ledger-score">${agent.score ? `${agent.score.total}<small>/100</small>` : `—${agent.previousResult ? `<small> prior ${agent.previousResult.score.total}/100</small>` : ''}`}</td><td class="mono">${escapeHtml(agent.updatedAt.slice(0, 10))}</td></tr>`)
     .join('');
   return `<main class="secondary-view"><header class="view-header"><button class="brand" data-view="observatory">ULTRA13 <span>AGENT BENCHMARK</span></button><nav>${viewNav()}</nav><button class="primary-action" id="upload-evidence-button" aria-label="Upload Ultra13 JSON">${icon('upload')} UPLOAD ULTRA13 JSON</button></header><section class="ledger-shell"><div class="section-kicker">Cohort record · ${state.agents.length}/${state.maximumAgents}</div><div class="ledger-title"><div><h1>AGENT LEDGER</h1><p>Sortable source-of-truth summary; select a row to return to its evidence inspector.</p></div><div class="ledger-actions"><button class="secondary-action" id="import-cohort-button">${icon('table', 17)} Import cohort</button><button class="secondary-action" id="export-csv">${icon('download', 17)} Export CSV</button></div></div><div class="table-scroll"><table><thead><tr><th>Index</th><th>Agent</th><th>Framework</th><th>Version</th><th>Stage</th><th>Evidence</th><th>Score</th><th>Updated</th></tr></thead><tbody>${rows || '<tr><td colspan="8">No agents match this filter.</td></tr>'}</tbody></table></div></section></main>`;
 };
@@ -305,20 +314,6 @@ const render = (): void => {
   bindEvents();
 };
 
-const mergeAgent = (incoming: AgentRecord): void => {
-  const existing = state.agents.find((agent) => agent.id === incoming.id);
-  if (existing) {
-    Object.assign(existing, incoming, { index: existing.index, createdAt: existing.createdAt });
-  } else {
-    const used = new Set(state.agents.map((agent) => agent.index));
-    const nextIndex = Array.from({ length: state.maximumAgents }, (_, position) => position + 1).find((index) => !used.has(index));
-    if (!nextIndex) throw new Error('All 100 cohort slots are already assigned.');
-    incoming.index = nextIndex;
-    state.agents.push(incoming);
-  }
-  state.selectedAgentId = incoming.id;
-};
-
 const handleEvidenceFiles = async (files: FileList): Promise<void> => {
   let imported = 0;
   const warnings: string[] = [];
@@ -326,9 +321,15 @@ const handleEvidenceFiles = async (files: FileList): Promise<void> => {
     try {
       if (file.size > 25 * 1024 * 1024) throw new Error(`${file.name}: exceeds the 25 MB per-bundle safety limit`);
       const result = await parseUltra13Bundle(await file.text(), file.name, state.agents.length + 1);
-      mergeAgent(result.agent);
+      mergeAgentRecord(state, result.agent);
       await saveRawEvidence(result.agent.evidence?.sha256 ?? '', result.rawEvidence);
-      addActivity('evidence_ingested', `${result.agent.repository}: ${result.agent.score?.total ?? '—'}/100`, result.agent.id);
+      addActivity(
+        result.agent.score ? 'evidence_ingested' : 'assessment_blocked',
+        result.agent.score
+          ? `${result.agent.repository}: ${result.agent.score.total}/100`
+          : `${result.agent.repository}: unscored · ${result.agent.evidence?.assessmentStatus ?? 'unknown'}`,
+        result.agent.id,
+      );
       warnings.push(...result.warnings.map((warning) => `${result.agent.name}: ${warning}`));
       imported += 1;
     } catch (error) {
@@ -345,7 +346,7 @@ const handleCohortFile = async (file: File): Promise<void> => {
   const previous = new Map(state.agents.map((agent) => [agent.id, agent]));
   state.agents = incoming.map((record) => {
     const existing = previous.get(record.id);
-    return existing ? { ...record, evidence: existing.evidence, score: existing.score, stage: existing.stage, compatibility: existing.compatibility, notes: existing.notes, createdAt: existing.createdAt, updatedAt: existing.updatedAt } : record;
+    return existing ? { ...record, evidence: existing.evidence, score: existing.score, previousResult: existing.previousResult, stage: existing.stage, compatibility: existing.compatibility, notes: existing.notes, createdAt: existing.createdAt, updatedAt: existing.updatedAt } : record;
   });
   state.selectedAgentId = state.agents[0]?.id ?? null;
   addActivity('cohort_imported', `Imported ${state.agents.length} agent identities from ${file.name}.`);
@@ -458,6 +459,11 @@ const bindEvents = (): void => {
         asi: agent.score?.components.find((component) => component.id === 'asi')?.points ?? '',
         findings: agent.score?.components.find((component) => component.id === 'findings')?.points ?? '',
         unknowns: agent.score?.unknownCount ?? '',
+        previous_score: agent.previousResult?.score.total ?? '',
+        assessment_status: agent.evidence?.assessmentStatus ?? '',
+        scan_mode: agent.evidence?.scanMode ?? '',
+        scan_status: agent.evidence?.scanStatus ?? '',
+        blocker: agent.blocker,
         evidence_sha256: agent.evidence?.sha256 ?? '',
       })),
     ),

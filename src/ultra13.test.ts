@@ -22,6 +22,45 @@ describe('Ultra13 evidence importer', () => {
   it('rejects valid JSON that is not an Ultra13 evidence bundle', async () => {
     await expect(parseUltra13Bundle('{"name":"not ultra13"}', 'other.json', 1)).rejects.toThrow('not a recognizable Ultra13');
   });
+
+  it('imports an Ultra13 failed decision export as blocked and unscored', async () => {
+    const failed = JSON.stringify({
+      application: {
+        id: 'app_example',
+        name: 'Benchmark rerun',
+        repository: 'owner/agent',
+        repositoryUrl: 'https://github.com/owner/agent',
+        createdAt: '2026-09-04T20:00:00.000Z',
+      },
+      activeDeploymentUnit: {
+        schemaVersion: 'ultra13.deployment-unit/v1alpha1',
+        repository: 'owner/agent',
+        commit: '0123456789abcdef',
+        configurationDigest: 'sha256:configuration',
+      },
+      latestScanJob: {
+        mode: 'scan',
+        status: 'failed',
+        completedAt: '2026-09-04T20:05:00.000Z',
+      },
+      deploymentCandidateTotal: 7,
+      findings: [],
+    });
+
+    const result = await parseUltra13Bundle(failed, 'failed.json', 1, '2026-09-04T21:00:00.000Z');
+    expect(result.agent).toMatchObject({
+      repository: 'owner/agent',
+      stage: 'blocked',
+      score: null,
+      blocker: 'Ultra13 scan job failed for 0123456789ab.',
+    });
+    expect(result.agent.evidence).toMatchObject({
+      assessmentStatus: 'failed',
+      scanMode: 'scan',
+      scanStatus: 'failed',
+      candidateTotal: 7,
+    });
+  });
 });
 
 describe('100-agent cohort intake', () => {
