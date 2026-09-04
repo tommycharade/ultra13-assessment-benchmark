@@ -2,8 +2,8 @@
   "schemaVersion": "ultra13-assessment-state/v1",
   "cohortName": "Open-source agent security benchmark",
   "maximumAgents": 100,
-  "generatedAt": "2026-09-04T21:39:37.845Z",
-  "selectedAgentId": "crewaiinc-crewai-examples",
+  "generatedAt": "2026-09-04T21:48:37.909Z",
+  "selectedAgentId": "google-adk-python",
   "agents": [
     {
       "id": "openai-openai-agents-python",
@@ -155,20 +155,20 @@
       "name": "adk-python",
       "repository": "google/adk-python",
       "repositoryUrl": "https://github.com/google/adk-python",
-      "framework": "unknown",
-      "version": "unknown",
+      "framework": "google-adk",
+      "version": "2.6.3",
       "stage": "blocked",
-      "compatibility": "unknown",
+      "compatibility": "supported",
       "score": null,
       "evidence": {
-        "sourceFile": "google-adk-rerun.json",
-        "sha256": "78340f5d6bb51484b2f8a0cce24458b5fa1f4bf2090bf3d388ef851997e7969f",
+        "sourceFile": "google-adk-rerun-pinned.json",
+        "sha256": "73d7a075aabe509972d9053ee82d411d9a07ee99f6a6ecdeb30cf5e7902294aa",
         "schemaVersion": "Ultra13 assessment artifact",
-        "capturedAt": "2026-09-04T21:26:36.947315Z",
+        "capturedAt": "2026-09-04T21:45:04.706967Z",
         "product": "Ultra13",
         "buildIdentity": "",
-        "configurationDigest": "sha256:b6e6b127ea57a19b3ec7c5d4bcefb051653f5d2b9bb23c57e4e9f1d8f5b7a357",
-        "commit": "44e0b2a8b1215aa98f057c4a781ddc24bae220da",
+        "configurationDigest": "sha256:334b80d0c653b6af389dd06fcd97b7f470b9d04934f56fd387710be034c5c083",
+        "commit": "0b55dcf9d32e22d4c8b303c3da1c275c135682bf",
         "maestroRulePack": "unknown",
         "asiRulePack": "unknown",
         "maestro": {
@@ -189,15 +189,15 @@
         },
         "findingCount": null,
         "openFindingCount": null,
-        "assessmentStatus": "failed",
-        "scanMode": "scan",
-        "scanStatus": "failed",
-        "candidateTotal": 44
+        "assessmentStatus": "not-produced",
+        "scanMode": "discover",
+        "scanStatus": "succeeded",
+        "candidateTotal": 43
       },
-      "blocker": "Ultra13 scan job failed for 44e0b2a8b121.",
-      "notes": "Ultra13 did not produce scorable assessment evidence; this import remains unscored. The latest exported scan job has failed status. Compatibility is unknown; no supported pairing is assumed.",
+      "blocker": "Ultra13 exported the selected scope, but no assessment result was produced; latest job discover:succeeded.",
+      "notes": "Ultra13 did not produce scorable assessment evidence; this import remains unscored. The latest exported job is discover:succeeded; no assessment job is present. Compatibility is unknown; no supported pairing is assumed.",
       "createdAt": "2026-08-12T01:02:00.000Z",
-      "updatedAt": "2026-09-04T21:39:37.845Z",
+      "updatedAt": "2026-09-04T21:48:37.909Z",
       "previousResult": {
         "label": "Previous completed baseline",
         "score": {
@@ -439,6 +439,13 @@
     }
   ],
   "activity": [
+    {
+      "id": "f3bcb335-8dea-448e-bcae-a5f4b4685692",
+      "at": "2026-09-04T21:48:37.909Z",
+      "action": "assessment_blocked",
+      "detail": "google/adk-python: unscored · not-produced",
+      "agentId": "google-adk-python"
+    },
     {
       "id": "72e00d0f-0ca1-45d1-82d2-8042156e86a9",
       "at": "2026-09-04T21:39:37.845Z",

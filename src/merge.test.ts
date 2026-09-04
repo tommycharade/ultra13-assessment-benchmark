@@ -82,4 +82,69 @@ describe('assessment result history', () => {
       previousResult: { label: 'Previous completed baseline', score: { total: 42 } },
     });
   });
+
+  it('recovers version metadata when a corrected rerun returns to the previous immutable commit', () => {
+    const baselineEvidence = evidence('baseline', 'baseline-commit');
+    const currentEvidence = { ...evidence('head-failure', 'newer-head'), assessmentStatus: 'failed' as const };
+    const baselineScore = {
+      version: 'ultra13-benchmark-score/v1' as const,
+      total: 25,
+      preciseTotal: 24.6,
+      components: [],
+      unknownCount: 0,
+      evaluatedAt: '2026-09-01T00:00:00.000Z',
+      method: 'static-evidence-only' as const,
+    };
+    const current: AgentRecord = {
+      id: 'owner-agent',
+      index: 1,
+      name: 'agent',
+      repository: 'owner/agent',
+      repositoryUrl: 'https://github.com/owner/agent',
+      framework: 'unknown',
+      version: 'unknown',
+      stage: 'blocked',
+      compatibility: 'unknown',
+      score: null,
+      evidence: currentEvidence,
+      previousResult: {
+        label: 'Previous completed baseline',
+        score: baselineScore,
+        evidence: baselineEvidence,
+        compatibility: 'supported',
+        framework: 'google-adk',
+        version: '2.6.3',
+      },
+      blocker: 'Head scan failed.',
+      notes: '',
+      createdAt: '2026-09-01T00:00:00.000Z',
+      updatedAt: '2026-09-04T00:00:00.000Z',
+    };
+    const corrected: AgentRecord = {
+      ...current,
+      framework: 'unknown',
+      version: 'unknown',
+      compatibility: 'unknown',
+      evidence: { ...evidence('corrected-failure', 'baseline-commit'), assessmentStatus: 'not-produced' },
+      previousResult: undefined,
+    };
+    const state: AssessmentState = {
+      schemaVersion: 'ultra13-assessment-state/v1',
+      cohortName: 'Test',
+      maximumAgents: 100,
+      generatedAt: current.updatedAt,
+      selectedAgentId: current.id,
+      agents: [current],
+      activity: [],
+    };
+
+    mergeAgentRecord(state, corrected);
+
+    expect(state.agents[0]).toMatchObject({
+      framework: 'google-adk',
+      version: '2.6.3',
+      compatibility: 'supported',
+      previousResult: { score: { total: 25 } },
+    });
+  });
 });

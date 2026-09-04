@@ -40,10 +40,10 @@ The deployed Ultra13 UI successfully discovered and bound the intended deploymen
 | Agent | Selected commit | Discovery candidates | Latest exported job | Current score | Previous completed score |
 | --- | --- | ---: | --- | ---: | ---: |
 | `openai/openai-agents-python` | `e3d7c1727bf4` | 23 | `scan:failed` | Unscored | 20/100 |
-| `google/adk-python` | `44e0b2a8b121` | 44 | `scan:failed` | Unscored | 25/100 |
+| `google/adk-python` | `0b55dcf9d32e` | 43 | `discover:succeeded`; no assessment job exported | Unscored | 25/100 |
 | `crewaiinc/crewai-examples` | `da94a91e691e` | 35 | `discover:succeeded`; no assessment job exported | Unscored | 14/100 |
 
-The dashboard records these as blocked attempts. Previous scores remain available only as historical baselines and are excluded from current score distribution and aggregate outcome calculations. The Google ADK rerun resolved `HEAD` to a newer commit than the earlier pilot, so it is not a same-revision comparison.
+The dashboard records these as blocked attempts. Previous scores remain available only as historical baselines and are excluded from current score distribution and aggregate outcome calculations. All three reruns use the same immutable commits as the earlier pilot.
 
 ## Benchmark Score v1
 

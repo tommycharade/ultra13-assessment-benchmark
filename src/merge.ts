@@ -4,6 +4,9 @@ export const mergeAgentRecord = (state: AssessmentState, incoming: AgentRecord):
   const existing = state.agents.find((agent) => agent.id === incoming.id);
   if (existing) {
     const sameCommit = Boolean(existing.evidence?.commit && incoming.evidence?.commit === existing.evidence.commit);
+    const matchesPreviousCommit = Boolean(
+      existing.previousResult?.evidence.commit && incoming.evidence?.commit === existing.previousResult.evidence.commit,
+    );
     if (!incoming.score && existing.score && existing.evidence) {
       incoming.previousResult = existing.previousResult ?? {
         label: 'Previous completed baseline',
@@ -13,6 +16,8 @@ export const mergeAgentRecord = (state: AssessmentState, incoming: AgentRecord):
         framework: existing.framework,
         version: existing.version,
       };
+    } else if (!incoming.score && !incoming.previousResult && existing.previousResult) {
+      incoming.previousResult = existing.previousResult;
     } else if (incoming.score && existing.score && existing.evidence && incoming.evidence?.sha256 !== existing.evidence.sha256) {
       incoming.previousResult = {
         label: 'Previous completed assessment',
@@ -23,10 +28,15 @@ export const mergeAgentRecord = (state: AssessmentState, incoming: AgentRecord):
         version: existing.version,
       };
     }
-    if (sameCommit) {
-      if (incoming.framework === 'unknown') incoming.framework = existing.framework;
-      if (incoming.version === 'unknown') incoming.version = existing.version;
-      if (incoming.compatibility === 'unknown') incoming.compatibility = existing.compatibility;
+    const metadataSource = sameCommit
+      ? existing
+      : matchesPreviousCommit
+        ? existing.previousResult
+        : null;
+    if (metadataSource) {
+      if (incoming.framework === 'unknown') incoming.framework = metadataSource.framework;
+      if (incoming.version === 'unknown') incoming.version = metadataSource.version;
+      if (incoming.compatibility === 'unknown') incoming.compatibility = metadataSource.compatibility;
     }
     Object.assign(existing, incoming, { index: existing.index, createdAt: existing.createdAt });
   } else {
